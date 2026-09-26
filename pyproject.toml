@@ -332,7 +332,7 @@ stt-whisper = [
 ]
 audio-io = ["sounddevice==0.5.5", "numpy==2.4.3"]
 # WeChat voice decode (tools/transcription_tools.py self-heal path).
-silk = ["pilk==0.2.4"]
+silk = ["pilk==0.2.4; python_version < '3.14'"]
 # Wake-engine sub-extras — lazy per-engine installs so a user who only wants
 # sherpa-onnx doesn't pull the whole [wake] bundle. Pins match [wake].
 wake-openwakeword = [
@@ -602,6 +602,10 @@ neutts = "python_version < '3.14'"
 # Windows ARM64 wheel.
 kittentts = "(platform_machine != 'ARM64' or sys_platform != 'win32') and (platform_machine != 'x86_64' or sys_platform != 'darwin')"
 piper = "(platform_machine != 'ARM64' or sys_platform != 'win32') and (platform_machine != 'x86_64' or sys_platform != 'darwin')"
+# pilk (WeChat SILK decode) published its last wheel at cp311; the sdist needs a C compiler, so on
+# 3.14 the extra cannot build and takes the whole dependency sync down with it. Same treatment as
+# neutts above.
+silk = "python_version < '3.14'"
 
 [tool.uv]
 # uv otherwise enables the dev group by default, including in payload builds.
